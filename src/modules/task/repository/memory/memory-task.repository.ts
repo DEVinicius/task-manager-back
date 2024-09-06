@@ -1,4 +1,4 @@
-import { Task } from 'src/modules/model/task';
+import { Task } from 'src/modules/task/model/task';
 import { CreateTaskDTO } from '../../dto/create-task.dto';
 import { TaskRepository } from '../task.repository';
 
