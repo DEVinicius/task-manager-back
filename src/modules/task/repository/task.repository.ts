@@ -1,6 +1,9 @@
 import { Task } from 'src/modules/task/model/task';
-import { CreateTaskDTO } from '../dto/create-task.dto';
+import { CreateTask } from './interfaces/create-task';
 
 export interface TaskRepository {
-  create(data: CreateTaskDTO): Promise<Task>;
+  create(data: CreateTask): Promise<Task>;
+  findByUserId(userId: number): Promise<Task[]>;
+  findById(id: number): Promise<Task>;
+  remove(id: number): Promise<void>;
 }

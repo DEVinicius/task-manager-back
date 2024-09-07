@@ -20,6 +20,8 @@ export class UserMemoryRepository implements UserRepository {
       password: user.password,
     };
 
+    console.log({ newUser });
+
     this.users.push(newUser);
 
     this.counter = this.counter++;

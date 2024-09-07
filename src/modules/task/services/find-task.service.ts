@@ -1,6 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { TaskRepository } from '../repository/task.repository';
+import { TASK_REPOSITORY_TOKEN } from '../repository/__token__';
 
 @Injectable()
 export class FindTaskService {
-    constructor() {}
+    constructor(
+        @Inject(TASK_REPOSITORY_TOKEN)
+        private readonly taskRepository: TaskRepository
+    ) {}
+
+    public async execute(taskId: number, userId: number) {
+        const task = await this.taskRepository.findById(taskId);
+
+        if(task.userId != userId) throw new Error('Task indisponível');
+
+        return task;
+    }
 }

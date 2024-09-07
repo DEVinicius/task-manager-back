@@ -1,3 +1,3 @@
 export class Auth {
-    token: string
+    access_token: string
 }

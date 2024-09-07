@@ -9,10 +9,4 @@ export class CreateTaskDTO {
 
   @IsNumber()
   timesToComplete: number;
-
-  @IsNumber()
-  timesExecuted: number;
-
-  @IsNumber()
-  userId: number;
 }
