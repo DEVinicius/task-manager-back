@@ -12,6 +12,20 @@ export class MemoryTaskRepository implements TaskRepository {
     this.tasks = [];
     this.id = 1;
   }
+  public async updateExecutedTime(id: number): Promise<Task> {
+    const newTasks = this.tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            timesExecuted: task.timesExecuted + 1,
+          }
+        : task,
+    );
+
+    this.tasks = newTasks;
+
+    return this.findById(id);
+  }
 
   public async remove(id: number): Promise<void> {
     const newTasks = this.tasks.filter((task) => task.id != id);

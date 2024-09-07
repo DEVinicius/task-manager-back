@@ -6,4 +6,5 @@ export interface TaskRepository {
   findByUserId(userId: number): Promise<Task[]>;
   findById(id: number): Promise<Task>;
   remove(id: number): Promise<void>;
+  updateExecutedTime(id: number): Promise<Task>;
 }
