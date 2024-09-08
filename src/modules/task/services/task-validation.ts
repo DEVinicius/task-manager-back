@@ -15,6 +15,8 @@ export class TaskValidation {
   ): Promise<void> {
     const task = await this.taskRepository.findById(taskId);
 
+    if (!task) throw new Error('Tarefa não encontrada');
+
     if (task.userId != userId) throw new Error('Serviço não permitido');
   }
 }

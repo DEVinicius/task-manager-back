@@ -2,6 +2,7 @@ import { Task } from 'src/modules/task/model/task';
 import { CreateTaskDTO } from '../../dto/create-task.dto';
 import { TaskRepository } from '../task.repository';
 import { CreateTask } from '../interfaces/create-task';
+import { UpdateTaskDTO } from '../../dto/update-task.dto';
 
 export class MemoryTaskRepository implements TaskRepository {
   private tasks: Task[];
@@ -12,6 +13,22 @@ export class MemoryTaskRepository implements TaskRepository {
     this.tasks = [];
     this.id = 1;
   }
+
+  public async update(id: number, updateTask: UpdateTaskDTO): Promise<Task> {
+    const newTasks = this.tasks.map((task) =>
+      task.id === id
+        ? {
+            ...task,
+            ...updateTask,
+          }
+        : task,
+    );
+
+    this.tasks = newTasks;
+
+    return await this.findById(id);
+  }
+
   public async updateExecutedTime(id: number): Promise<Task> {
     const newTasks = this.tasks.map((task) =>
       task.id === id
