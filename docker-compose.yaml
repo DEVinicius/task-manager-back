@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  project-db:
+    image: mysql
+    restart: always
+    container_name: project-db
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: back-end
+      MYSQL_USER: task_manager
+      MYSQL_PASSWORD: teste_123
+    ports:
+      - '3307:3306'
+    volumes:
+      - my-db:/.docker/mysql
+      - ./db-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - mysql_network
+
+volumes:
+  my-db:
+
+networks:
+  mysql_network:
+

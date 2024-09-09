@@ -4,7 +4,7 @@ import { TASK_REPOSITORY_TOKEN } from '../repository/__token__';
 import { TaskRepository } from '../repository/task.repository';
 
 @Injectable()
-export class CreateTask {
+export class CreateTaskService {
   constructor(
     @Inject(TASK_REPOSITORY_TOKEN)
     private readonly taskRepository: TaskRepository,
