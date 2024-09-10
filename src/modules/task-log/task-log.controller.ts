@@ -5,6 +5,7 @@ import {
   HttpException,
   Injectable,
   Param,
+  Patch,
   UseGuards,
 } from '@nestjs/common';
 import { FindMarksTodayService } from './services/find-marks-today.service';
@@ -30,7 +31,7 @@ export class TaskLogController {
     }
   }
 
-  @Get('/:id')
+  @Patch('/:id')
   @UseGuards(AuthGuard)
   public async updateToDone(@Param('id') id: string, @Headers() headers: any) {
     try {

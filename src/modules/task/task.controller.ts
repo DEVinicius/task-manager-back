@@ -4,6 +4,7 @@ import {
   Get,
   Header,
   Headers,
+  HttpException,
   Injectable,
   Post,
   UseGuards,
@@ -23,8 +24,13 @@ export class TaskController {
   @Post('')
   @UseGuards(AuthGuard)
   public async create(@Body() task: CreateTaskDTO, @Headers() headers: any) {
-    const taskCreated = await this.createTask.execute(task, headers.user.sub);
-    return taskCreated;
+    try {
+        const taskCreated = await this.createTask.execute(task, headers.user.sub);
+        return taskCreated;
+    } catch (error) {
+        console.log(error)
+        throw new HttpException('Falha Ao criar tarefa', 400)
+    }
   }
 
   @Get()

@@ -4,6 +4,7 @@ import { TaskLogRepository } from '../repository/task-log.repository';
 import { TASK_REPOSITORY_TOKEN } from 'src/modules/task/repository/__token__';
 import { TaskRepository } from 'src/modules/task/repository/task.repository';
 import { TaskLog } from '../model/task-log';
+import { Task } from 'src/modules/task/model/task';
 
 @Injectable()
 export class FindMarksTodayService {
@@ -15,19 +16,39 @@ export class FindMarksTodayService {
   ) {}
 
   public async execute(userId: number): Promise<TaskLog[]> {
-    // get tasks of userId
     const tasks = await this.taskRepository.findByUserId(userId);
-    console.log(tasks);
     if (tasks.length === 0) return [];
 
     const tasksIds = tasks.map((task) => task.id);
-    console.log(tasksIds);
 
     const taskLogs = await this.taskLogRepository.findMarksToday(tasksIds);
 
-    if (taskLogs.length === 0) return await this.createTaskLogs(tasksIds);
+    console.log(this.validateTaskLogs(taskLogs, tasks));
+
+    if (this.validateTaskLogs(taskLogs, tasks))
+      return await this.createTaskLogs(
+        tasksIds.filter((t) => !taskLogs.find((tl) => tl.task.id === t)),
+      );
 
     return taskLogs;
+  }
+
+  private validateTaskLogs(taskLogs: TaskLog[], tasks: Task[]) {
+    return (
+      this.ensureTaskLogsIsEmpty(taskLogs.length) ||
+      this.ensureTaskLogsLengthIsEqualTasks(taskLogs.length, tasks.length)
+    );
+  }
+
+  private ensureTaskLogsLengthIsEqualTasks(
+    taskLogsLength: number,
+    tasksLength: number,
+  ): boolean {
+    return taskLogsLength != tasksLength;
+  }
+
+  private ensureTaskLogsIsEmpty(tasksLogsLength: number): boolean {
+    return tasksLogsLength === 0;
   }
 
   private async createTaskLogs(tasksId: number[]): Promise<TaskLog[]> {

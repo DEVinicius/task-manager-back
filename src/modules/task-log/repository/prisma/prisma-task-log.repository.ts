@@ -23,6 +23,7 @@ export class PrismaTaskLogRepository implements TaskLogRepository {
     return {
       createdAt: taskLog.createdAt,
       isDone: taskLog.isDone,
+      id: taskLog.id,
       task: {
         description: taskLog.task.description,
         id: taskLog.task.id,
@@ -78,6 +79,7 @@ export class PrismaTaskLogRepository implements TaskLogRepository {
       return {
         createdAt: task.createdAt,
         isDone: task.isDone,
+        id: task.id,
         task: {
           description: task.task.description,
           id: task.task.id,

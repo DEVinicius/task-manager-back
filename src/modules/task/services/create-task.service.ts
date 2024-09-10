@@ -11,6 +11,7 @@ export class CreateTaskService {
   ) {}
 
   public async execute(data: CreateTaskDTO, userId: number) {
+    console.log({ data, userId });
     const task = await this.taskRepository.create({
       ...data,
       userId,
